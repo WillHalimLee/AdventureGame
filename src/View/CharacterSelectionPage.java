@@ -15,15 +15,15 @@ public class CharacterSelectionPage {
     /**
      * An image of a thief.
      */
-    private transient BufferedImage myThiefImage;
+    private  BufferedImage myThiefImage;
     /**
      * An image of a warrior.
      */
-    private transient BufferedImage myWarriorImage;
+    private  BufferedImage myWarriorImage;
     /**
      * An image of a priest.
      */
-    private transient BufferedImage myPriestImage;
+    private  BufferedImage myPriestImage;
     /**
      * The pen that is used to draw.
      */

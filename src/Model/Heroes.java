@@ -16,7 +16,7 @@ import static javax.imageio.ImageIO.read;
  * we will be creating 3 other subclasses which extends
  * off of Heroes which will be Priestess, Thief, and Warrior.
  *
- * @author Halim Lee, Marrok Young, Andrew Chon.
+ * @author Halim Lee
  * @version July 2023.
  */
 public abstract class Heroes extends Entity {
@@ -169,9 +169,16 @@ public abstract class Heroes extends Entity {
         }
         // Draw my hero in the middle of the viewable screen.
         theGraphics.drawImage(image, myScreensMiddleX, myScreensMiddleY, myGamePanel.getSpriteSize(), myGamePanel.getSpriteSize(), null);
+        // draw the rectangle that acts as the collision indicator.
+        theGraphics.drawRect(myScreensMiddleX + getMySolidArea().x,myScreensMiddleY + getMySolidArea().y, getMySolidArea().width,  getMySolidArea().height);
+
         drawHpBar(theGraphics);
     }
-
+    @Override
+    public void resetSolidArea(){
+        getMySolidArea().x = 12;
+        getMySolidArea().y = 12;
+    }
     /**
      * Sets the Hp Bar.
      */

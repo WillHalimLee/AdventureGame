@@ -14,7 +14,7 @@ public class Collision implements Serializable {
     /**
      * The game panel that the character and entities are drawn on.
      */
-    private  GamePanel myGamePanel;
+    private final GamePanel myGamePanel;
     /**
      * Sets up the collision object with the correct game panel.
      *
@@ -28,52 +28,52 @@ public class Collision implements Serializable {
      * Goes through all the tiles in the dungeon and checks if the player collided with any. <br>
      * If the player hits a tile that they can't move through, we stop the player.
      *
-     * @param dungeonChar   The character that we are checking for collisions with.
+     * @param entity   The character that we are checking for collisions with.
      */
-    public void checkTile(final Entity dungeonChar) {
-        int heroLeftWorldX = dungeonChar.getMyWorldXCoordinate() + dungeonChar.getMySolidArea().x;
-        int heroRightWorldX = dungeonChar.getMyWorldXCoordinate() + dungeonChar.getMySolidArea().x + dungeonChar.getMySolidArea().width;
-        int heroTopWorldY = dungeonChar.getMyWorldYCoordinate() + dungeonChar.getMySolidArea().y;
-        int heroBottomWorldY = dungeonChar.getMyWorldYCoordinate() + dungeonChar.getMySolidArea().y + dungeonChar.getMySolidArea().height;
+    public void checkTile(final Entity entity) {
+        int entityLeftWorldX = entity.getMyWorldXCoordinate() + entity.getMySolidArea().x;
+        int entityRightWorldX = entity.getMyWorldXCoordinate() + entity.getMySolidArea().x + entity.getMySolidArea().width;
+        int entityTopWorldY = entity.getMyWorldYCoordinate() + entity.getMySolidArea().y;
+        int entityBottomWorldY = entity.getMyWorldYCoordinate() + entity.getMySolidArea().y + entity.getMySolidArea().height;
 
-        int heroLeftCol = heroLeftWorldX / myGamePanel.getSpriteSize();
-        int heroRightCol = heroRightWorldX / myGamePanel.getSpriteSize();
-        int heroTopRow = heroTopWorldY / myGamePanel.getSpriteSize();
-        int heroBottomRow = heroBottomWorldY / myGamePanel.getSpriteSize();
+        int entityLeftCol = entityLeftWorldX / myGamePanel.getSpriteSize();
+        int entityRightCol = entityRightWorldX / myGamePanel.getSpriteSize();
+        int entityTopRow = entityTopWorldY / myGamePanel.getSpriteSize();
+        int entityBottomRow = entityBottomWorldY / myGamePanel.getSpriteSize();
 
         int tileNum1, tileNum2;
 
-        switch (dungeonChar.getMyDirection()) {
+        switch (entity.getMyDirection()) {
             case "up":
-                heroTopRow = (heroTopWorldY - dungeonChar.getMySpeed()) / myGamePanel.getSpriteSize();
-                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[heroTopRow][heroLeftCol];
-                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[heroTopRow][heroRightCol];
+                entityTopRow = (entityTopWorldY - entity.getMySpeed()) / myGamePanel.getSpriteSize();
+                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityTopRow][entityLeftCol];
+                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityTopRow][entityRightCol];
                 if (myGamePanel.getMyTileM().getMyTile()[tileNum1].getMyCollision() || myGamePanel.getMyTileM().getMyTile()[tileNum2].getMyCollision()) {
-                    dungeonChar.setMyCollision(true);
+                    entity.setMyCollision(true);
                 }
                 break;
             case "down":
-                heroTopRow = (heroTopWorldY - dungeonChar.getMySpeed()) / myGamePanel.getSpriteSize();
-                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[heroBottomRow][heroLeftCol];
-                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[heroBottomRow][heroRightCol];
+                entityBottomRow = (entityBottomWorldY - entity.getMySpeed()) / myGamePanel.getSpriteSize();
+                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityBottomRow][entityLeftCol];
+                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityBottomRow][entityRightCol];
                 if (myGamePanel.getMyTileM().getMyTile()[tileNum1].getMyCollision() || myGamePanel.getMyTileM().getMyTile()[tileNum2].getMyCollision()) {
-                    dungeonChar.setMyCollision(true);
+                    entity.setMyCollision(true);
                 }
                 break;
             case "left":
-                heroTopRow = (heroTopWorldY - dungeonChar.getMySpeed()) / myGamePanel.getSpriteSize();
-                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[heroTopRow][heroLeftCol];
-                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[heroBottomRow][heroLeftCol];
+                entityLeftCol = (entityLeftWorldX - entity.getMySpeed()) / myGamePanel.getSpriteSize();
+                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityTopRow][entityLeftCol];
+                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityBottomRow][entityLeftCol];
                 if (myGamePanel.getMyTileM().getMyTile()[tileNum1].getMyCollision() || myGamePanel.getMyTileM().getMyTile()[tileNum2].getMyCollision()) {
-                    dungeonChar.setMyCollision(true);
+                    entity.setMyCollision(true);
                 }
                 break;
             case "right":
-                heroTopRow = (heroTopWorldY - dungeonChar.getMySpeed()) / myGamePanel.getSpriteSize();
-                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[heroTopRow][heroRightCol];
-                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[heroBottomRow][heroRightCol];
+                entityRightCol = (entityRightWorldX - entity.getMySpeed()) / myGamePanel.getSpriteSize();
+                tileNum1 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityTopRow][entityRightCol];
+                tileNum2 = myGamePanel.getMyTileM().getMyMapArray()[myGamePanel.getCurrentMap()][entityBottomRow][entityRightCol];
                 if (myGamePanel.getMyTileM().getMyTile()[tileNum1].getMyCollision() || myGamePanel.getMyTileM().getMyTile()[tileNum2].getMyCollision()) {
-                    dungeonChar.setMyCollision(true);
+                    entity.setMyCollision(true);
                 }
                 break;
         }
@@ -104,7 +104,6 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(mon.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-                            myGamePanel.setMyGameState(3);
                         }
                         break;
                     case "down":
@@ -112,8 +111,6 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(mon.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-
-                            myGamePanel.setMyGameState(3);
                         }
                         break;
                     case "left":
@@ -121,7 +118,6 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(mon.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-                            myGamePanel.setMyGameState(3);
                         }
                         break;
                     case "right":
@@ -129,7 +125,6 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(mon.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-                            myGamePanel.setMyGameState(3);
                         }
                         break;
                 }
@@ -169,15 +164,7 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(item.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-                            item.setFound(true);
-                            // We need to check if we hit a health potion
-                            if (item instanceof HealthPotion) {
-                                theHero.setHp(theHero.getHp() + ((HealthPotion) item).getHealthBack());
-                            } else if (item instanceof Pit) { // Or if we hit a pit
-                                theHero.setHp(theHero.getHp() - ((Pit) item).getPitDamage());
-                            } else if (item instanceof SpeedPotion) {
-                                theHero.setMySpeed(theHero.getMySpeed() + ((SpeedPotion) item).getSpeedBoost());
-                            }
+//                            item.setFound(true);
                         }
                     }
                     case "down" -> {
@@ -185,15 +172,8 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(item.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-                            item.setFound(true);
-                            // We need to check if we hit a health potion
-                            if (item instanceof HealthPotion) {
-                                theHero.setHp(theHero.getHp() + ((HealthPotion) item).getHealthBack());
-                            } else if (item instanceof Pit) { // Or if we hit a pit
-                                theHero.setHp(theHero.getHp() - ((Pit) item).getPitDamage());
-                            } else if (item instanceof SpeedPotion) {
-                                theHero.setMySpeed(theHero.getMySpeed() + ((SpeedPotion) item).getSpeedBoost());
-                            }
+//                            item.setFound(true);
+
                         }
                     }
                     case "left" -> {
@@ -201,15 +181,7 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(item.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-                            item.setFound(true);
-                            // We need to check if we hit a health potion
-                            if (item instanceof HealthPotion) {
-                                theHero.setHp(theHero.getHp() + ((HealthPotion) item).getHealthBack());
-                            } else if (item instanceof Pit) { // Or if we hit a pit
-                                theHero.setHp(theHero.getHp() - ((Pit) item).getPitDamage());
-                            } else if (item instanceof SpeedPotion) {
-                                theHero.setMySpeed(theHero.getMySpeed() + ((SpeedPotion) item).getSpeedBoost());
-                            }
+//                            item.setFound(true);
                         }
                     }
                     case "right" -> {
@@ -217,15 +189,7 @@ public class Collision implements Serializable {
                         if (theHero.getMySolidArea().intersects(item.getMySolidArea())) {
                             theHero.setMyCollision(true);
                             index = i++;
-                            item.setFound(true);
-                            // We need to check if we hit a health potion
-                            if (item instanceof HealthPotion) {
-                                theHero.setHp(theHero.getHp() + ((HealthPotion) item).getHealthBack());
-                            } else if (item instanceof Pit) { // Or if we hit a pit
-                                theHero.setHp(theHero.getHp() - ((Pit) item).getPitDamage());
-                            } else if (item instanceof SpeedPotion) {
-                                theHero.setMySpeed(theHero.getMySpeed() + ((SpeedPotion) item).getSpeedBoost());
-                            }
+//+
                         }
                     }
                 }

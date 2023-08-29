@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * An abstract class representing an item that could appear in a room.
  *
- * @author Halim Lee, Marrok Young, Andrew Chon.
+ * @author Halim Lee
  * @version July 2023.
  */
 public abstract class Item {
@@ -35,7 +35,7 @@ public abstract class Item {
     /**
      * The image representing the current item.
      */
-    private transient BufferedImage myItemImage;
+    public BufferedImage myItemImage;
     /**
      * Boolean that determines whether an item has been "found," or not. <br>
      * In other words: has the player collided with the item?
@@ -46,14 +46,9 @@ public abstract class Item {
      * Constructs an item.
      *
      * @param theGP          The 'GamePanel' to draw the item onto.
-     * @param theWorldX      The world-x coordinate to draw the item at.
-     * @param theWorldY      The world-y coordinate to draw the item at.
-
      */
-    public Item(final GamePanel theGP, final int theWorldX, final int theWorldY) {
+    public Item(final GamePanel theGP) {
         myGamePanel = theGP;
-        myWorldXCoordinate = theWorldX;
-        myWorldYCoordinate = theWorldY;
         mySolidArea = new Rectangle(0, 0, myGamePanel.getSpriteSize(), myGamePanel.getSpriteSize());
         myFound = false;
     }
@@ -61,7 +56,7 @@ public abstract class Item {
     /**
      * Gets the images associated with the specific item.
      */
-    public abstract void getItemImage();
+    public abstract void setItemImage();
 
     /**
      * Gets the world-x coordinate of the item.
@@ -124,16 +119,6 @@ public abstract class Item {
      */
     public void setFound(final boolean theFound) {
         myFound = theFound;
-    }
-
-
-    /**
-     * Sets the image associated with the item.
-     *
-     * @param theImage The image to set 'myItemImage' to.
-     */
-    public void setImage(final BufferedImage theImage) {
-        myItemImage = theImage;
     }
 
     /**

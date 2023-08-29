@@ -14,7 +14,7 @@ import static javax.imageio.ImageIO.read;
  * Priestess class which has the ability to heal and
  * extends from the Heroes class.
  *
- * @author Halim Lee, Marrok Young, Andrew Chon.
+ * @author Halim Lee
  * @version July 2023.
  */
 

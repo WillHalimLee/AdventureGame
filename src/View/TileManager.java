@@ -19,18 +19,20 @@ public class TileManager {
     /**
      * A 2d array made from a text file.
      */
-    private final int myMapArr[][];
-
+    private final int myMapArr[][][];
+    private final int myNumberOfMaps = 10;
     /**
      * Constructor that creates the TileManage object.
      * @param theGamePanel the main game panel.
      */
     public TileManager(final GamePanel theGamePanel) {
         myGamePanel = theGamePanel;
-        myTile = new Tile[10];
-        myMapArr = new int[myGamePanel.getMyWorldRow()][myGamePanel.getMyWorldCol()];
+        myTile = new Tile[50];
+
+        myMapArr = new int[myNumberOfMaps][myGamePanel.getMyWorldRow()][myGamePanel.getMyWorldCol()];
         getTileImage();
-        loadMap("/map/Entrance.txt");
+        loadMap("/map/Entrance.txt",0);
+        loadMap("/map/WorldFloor01.txt",1);
     }
 
     /**
@@ -39,13 +41,37 @@ public class TileManager {
     public void getTileImage() {
         try {
             myTile[0] = new Tile();
-            myTile[0].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/stoneFloor0.png"))));
+            myTile[0].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/blackBackGround.png"))));
             myTile[1] = new Tile();
-            myTile[1].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/drkStoneWall_0.png"))));
+            myTile[1].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/drkStoneWall.png"))));
             myTile[1].setMyCollision(true);
+            myTile[2] = new Tile();
+            myTile[2].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/stoneFloor.png"))));
             myTile[3] = new Tile();
-            myTile[3].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/door.png"))));
-
+            myTile[3].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/drk_door.png"))));
+            myTile[3].setMyCollision(true);
+            myTile[4] = new Tile();
+            myTile[4].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/drk_stoneFloor.png"))));
+            myTile[5] = new Tile();
+            myTile[5].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/entrance_stairs.png"))));
+            myTile[6] = new Tile();
+            myTile[6].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/entrance_lantern_l.png"))));
+            myTile[7] = new Tile();
+            myTile[7].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/entrance_lantern_r.png"))));
+            myTile[8] = new Tile();
+            myTile[8].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/grass.png"))));
+            myTile[9] = new Tile();
+            myTile[9].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/water.png"))));
+            myTile[9].setMyCollision(true);
+            myTile[10] = new Tile();
+            myTile[10].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/log.png"))));
+            myTile[10].setMyCollision(true);
+            myTile[11] = new Tile();
+            myTile[11].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/sandRoad0.png"))));
+            myTile[12] = new Tile();
+            myTile[12].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/sandRoad1.png"))));
+            myTile[13] = new Tile();
+            myTile[13].setMyImage(ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/Tiles/sandRoad2.png"))));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -56,7 +82,7 @@ public class TileManager {
      * Returns the map array.
      * @return a 2d array that represents the dungeon map.
      */
-    public int[][] getMyMapArray() {
+    public int[][][] getMyMapArray() {
         return myMapArr;
     }
 
@@ -72,7 +98,7 @@ public class TileManager {
      * Loads the dungeon.txt file and converts it to a 2d array.
      * @param theMap the dungeon.txt file.
      */
-    public void loadMap(final String theMap) {
+    public void loadMap(final String theMap, int theMapNumber) {
         int col = 0;
         int row = 0;
         try {
@@ -80,7 +106,7 @@ public class TileManager {
             Scanner scan = new Scanner(Objects.requireNonNull(input));
             while (col < myGamePanel.getMyWorldCol() && row < myGamePanel.getMyWorldRow()) {
                 int number = scan.nextInt();
-                myMapArr[row][col] = number;
+                myMapArr[theMapNumber][row][col] = number;
                 col++;
                 if (col == myGamePanel.getMyWorldCol()) {
                     col = 0;
@@ -101,7 +127,7 @@ public class TileManager {
         int worldCol = 0;
 
         while (worldCol < myGamePanel.getMyWorldCol() && worldRow < myGamePanel.getMyWorldRow()) {
-            int tileTexture = myMapArr[worldRow][worldCol];
+            int tileTexture = myMapArr[myGamePanel.getCurrentMap()][worldRow][worldCol];
 
             int worldX = worldCol * myGamePanel.getSpriteSize();
             int worldY = worldRow * myGamePanel.getSpriteSize();

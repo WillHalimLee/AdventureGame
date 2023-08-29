@@ -10,7 +10,7 @@ import java.util.Random;
 /**
  * A abstract monster class that extends from DungeonCharacter.
  *
- * @author Halim Lee, Marrok Young, Andrew Chon.
+ * @author Halim Lee
  * @version July 2023.
  */
 public abstract class Monster extends Entity {
@@ -22,10 +22,17 @@ public abstract class Monster extends Entity {
      */
     protected Monster(GamePanel theGamePanel) {
         super(theGamePanel);
+        setHp(100);
+        setMySpeed(2);
         setMySolidArea(new Rectangle(0, 0, myGamePanel.getSpriteSize(), myGamePanel.getSpriteSize()));
     }
-
-
+    /**
+     * Resets the monsters solid area.
+     */
+    public void resetSolidArea(){
+        getMySolidArea().x = 0;
+        getMySolidArea().y = 0;
+    }
     /**
      * Updates the monster's data.
      */
@@ -33,7 +40,7 @@ public abstract class Monster extends Entity {
         setAction();
         myCollision = false;
         myGamePanel.getMyCollision().checkTile(this);
-//        myGamePanel.getMyCollision().monsterToPlayer(this);
+//      myGamePanel.getMyCollision().monsterToPlayer(this);
         if (!myCollision) {
             switch (myDirection) {
                 case "up" -> goUp();
@@ -44,7 +51,7 @@ public abstract class Monster extends Entity {
         }
         incSpriteCounter();
         if (getMySpriteCounter() > 12) {
-           switchMySpriteNum();
+            switchMySpriteNum();
             resetMySpriteCounter();
         }
     }
@@ -61,7 +68,6 @@ public abstract class Monster extends Entity {
                 if (!myDirection.equals("up")) {
                     myDirection = "up";
                 }
-
             }
             if (i > 25 && i <= 50) {
                 if (!myDirection.equals("down")) {
@@ -69,7 +75,6 @@ public abstract class Monster extends Entity {
                 }
             }
             if (i > 50 && i <= 75) {
-
                 if (!myDirection.equals("right")) {
                     myDirection = "right";
                 }
@@ -128,7 +133,8 @@ public abstract class Monster extends Entity {
                     break;
             }
             theGraphics.drawImage(image, screenX, screenY, myGamePanel.getSpriteSize(), myGamePanel.getSpriteSize(), null);
+            // draw the rectangle that acts as the collision indicator.
+            theGraphics.drawRect(screenX + getMySolidArea().x,screenY + getMySolidArea().y, getMySolidArea().width,  getMySolidArea().height);
         }
     }
-
 }

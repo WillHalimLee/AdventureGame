@@ -5,8 +5,7 @@ import Model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.Serial;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +32,13 @@ public class GamePanel extends JPanel implements Runnable {
      * The amount of tiles to fit into a column of the screen.
      */
     private final int myMaxScreenCol = 30;
+    /**
+     * Size of the map
+     */
+    private final int myWorldCol = 100;
+    private final int myWorldRow = 100;
+
+    private final int myCurrentMap = 1;
     /**
      * The width of the screen based on the tile size and the max amount of tiles in a column.
      */
@@ -93,11 +99,11 @@ public class GamePanel extends JPanel implements Runnable {
     /**
      * The list of all the monsters stored within the game.
      */
-    private List<Monster> myMonsterArray = myIE.getMyMonsterArray();
+    private List<Monster> myMonsterArray = new ArrayList<>();
     /**
      * A list of every item contained within the dungeon.
      */
-    private List<Item> myItemArray = myIE.getMyItemArray();
+    private List<Item> myItemArray = new ArrayList<>();
     /**
      * The hero the player will play as.
      */
@@ -144,8 +150,7 @@ public class GamePanel extends JPanel implements Runnable {
      * Boolean representing whether the player is looking at the about section of the game.
      */
     private boolean myAboutState = false;
-    private final int myWorldCol = 100;
-    private final int myWorldRow = 100;
+
 
     /**
      * Creates and sets up the game panel.
@@ -170,8 +175,7 @@ public class GamePanel extends JPanel implements Runnable {
             myMonsterArray.clear();
         }
         myIE.createMonster();
-        myMonsterArray = myIE.getMyMonsterArray();
-
+        myIE.createItems();
         for (Item item : myItemArray) {
             item.setFound(false);
         }
@@ -235,7 +239,6 @@ public class GamePanel extends JPanel implements Runnable {
     public GameOver getMyGameOver() {
         return myGameOverPage;
     }
-
 
     /**
      * Sets the monster list to a new monster list.
@@ -472,11 +475,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             pen.dispose();
         } else if (myGameState == GAME_OVER_STATE) {
-            stopMusic();
             myGameOverPage.draw(pen);
-        } else {
-            stopMusic();
-            myWinPage.draw(pen);
         }
     }
 
@@ -500,5 +499,9 @@ public class GamePanel extends JPanel implements Runnable {
      */
     public void stopMusic() {
         mySound.stop();
+    }
+
+    public int getCurrentMap() {
+        return myCurrentMap;
     }
 }

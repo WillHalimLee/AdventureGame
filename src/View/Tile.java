@@ -6,7 +6,7 @@ public class Tile {
     /**
      * The tile's image.
      */
-    private transient BufferedImage myImage;
+    private  BufferedImage myImage;
     /**
      * Boolean check to see if the tile has collision.
      */

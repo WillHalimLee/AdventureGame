@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  * Creates the abstract class DungeonCharacter which other
  * classes extends from like Hero and Monster.
  *
- * @author Halim Lee, Marrok Young, Andrew Chon.
+ * @author Halim Lee
  * @version July 2023.
  */
 
@@ -22,20 +22,20 @@ public abstract class Entity  {
     /**
      * The hp the character initially starts with.
      */
-    private int myDefaultHp;
+    private int myDefaultHp = 100;
 
     /**
      * The main game panel.
      */
-    public transient GamePanel myGamePanel;
+    public GamePanel myGamePanel;
     /**
      * The characters direction images.
      */
-    public transient BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     /**
      * A String that dictates the characters directions.
      */
-    public transient String myDirection = "down";
+    public String myDirection = "down";
     /**
      * The speed of the character.
      */
@@ -65,8 +65,8 @@ public abstract class Entity  {
      */
     private int myWorldYCoordinate;
     /**
-     * The entity in the game. Player, monsters, npcs.
-     * @param theGamePanel
+     * The entity in the game. Player, monsters, NPCs.
+     * @param theGamePanel the main game panel.
      */
     protected Entity(GamePanel theGamePanel) {
         myGamePanel = theGamePanel;
@@ -195,13 +195,7 @@ public abstract class Entity  {
     public void resetHP(){
         myHp = myDefaultHp;
     }
-    /**
-     * Resets the monsters solid area.
-     */
-    public void resetSolidArea(){
-        mySolidArea.x = 0;
-        mySolidArea.y = 0;
-    }
+    public abstract void resetSolidArea();
     public abstract void setEntityImage();
 
 }

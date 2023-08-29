@@ -113,6 +113,12 @@ public class Keyboard implements KeyListener {
                 default:
                     break;
             }
+            if (code == KeyEvent.VK_R) {
+                switch(myGamePanel.getCurrentMap()) {
+                    case 0: myGamePanel.getMyTileM().loadMap("/map/Entrance.txt",0); break;
+                    case 1: myGamePanel.getMyTileM().loadMap("/map/WorldFloor01.txt",1); break;
+                }
+            }
         } else if (myGamePanel.getMyGameState() == 3) {
             int code = e.getKeyCode();
             if (code == KeyEvent.VK_ENTER) {

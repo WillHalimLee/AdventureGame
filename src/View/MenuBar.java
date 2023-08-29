@@ -1,6 +1,7 @@
 package View;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 /**
  * This class creates and serves as the menu bar at the top of the game screen.
@@ -30,7 +31,6 @@ public class MenuBar extends JMenuBar {
         // If the player clicks on main menu, we set the game state to the menu
         JMenuItem mainMenu = new JMenuItem("Main Menu");
         mainMenu.addActionListener(e -> myGamePanel.setMyGameState(0));
-
         options.add(quit);
         options.addSeparator();
         options.add(save);

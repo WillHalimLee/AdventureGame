@@ -10,7 +10,7 @@ import static javax.imageio.ImageIO.read;
 /**
  * An Ogre class that extends from Monster.
  *
- * @author Halim Lee, Marrok Young, Andrew Chon.
+ * @author Halim Lee
  * @version July 2023.
  */
 public class Ogre extends Monster {
